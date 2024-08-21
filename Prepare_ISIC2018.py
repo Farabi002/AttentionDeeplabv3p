@@ -33,7 +33,8 @@ for idx in range(len(Tr_list)):
     b = Tr_list[idx]    
     a = b[0:len(Dataset_add)]
     b = b[len(b)-16: len(b)-4] 
-    add = (a+ 'ISIC2018_Task1_Training_GroundTruth/' + b +'_segmentation.png')    
+    add = (a+ 'ISIC2018_Task1_Training_GroundTruth/' + b +'_segmentation.png') 
+    print(add)
     img2 = sc.imread(add)
     img2 = np.double(sc.imresize(img2, [height, width], interp='bilinear'))
     Label_train_2018[idx, :,:] = img2    
