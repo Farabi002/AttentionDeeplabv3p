@@ -19,6 +19,8 @@ Dataset_add = '/ISIC2018/'
 Tr_add = 'ISIC2018_Task1-2_Training_Input'
 
 Tr_list = glob.glob(Dataset_add+ Tr_add+'/*.jpg')
+g=len(Tr_list)
+print(g)
 # It contains 2594 training samples
 Data_train_2018    = np.zeros([2594, height, width, channels])
 Label_train_2018   = np.zeros([2594, height, width])
