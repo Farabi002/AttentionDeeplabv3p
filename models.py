@@ -30,9 +30,10 @@ from keras.layers import ZeroPadding2D
 from keras.layers import GlobalAveragePooling2D
 from keras.layers import GlobalMaxPooling2D
 from keras.layers import AveragePooling2D
-from keras.engine import Layer
-from keras.engine import InputSpec
-from keras.engine.topology import get_source_inputs
+from tensorflow.keras.layers import Layer
+from tensorflow.keras.layers import InputSpec
+from tensorflow.keras.utils import get_source_inputs
+
 from keras import backend as K
 from keras.applications import imagenet_utils
 from keras.utils import conv_utils
