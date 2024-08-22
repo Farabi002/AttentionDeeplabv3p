@@ -27,7 +27,7 @@ Label_train_2018   = np.zeros([2594, height, width])
 
 print('Reading ISIC 2018')
 for idx in range(len(Tr_list)):
-    print(idx+1)
+    #print(idx+1)
     img = sc.imread(Tr_list[idx])
     img = np.double(sc.imresize(img, [height, width, channels], interp='bilinear', mode = 'RGB'))
     Data_train_2018[idx, :,:,:] = img
