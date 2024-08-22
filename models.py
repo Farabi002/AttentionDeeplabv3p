@@ -39,9 +39,8 @@ from keras.applications import imagenet_utils
 from tensorflow.python.keras.utils import conv_utils
 
 import keras
-from keras.layers.core import Lambda
+from tensorflow.keras.layers import Lambda
 from tensorflow.keras.utils import get_file
-
 from keras.layers import Add
 
 
