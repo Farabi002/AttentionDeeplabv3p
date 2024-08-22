@@ -53,7 +53,7 @@ batch_size = 7
 nb_epoch   = 100
 
 
-mcp_save = ModelCheckpoint('weight_isic18_deeplab_v3pa', save_best_only=True, monitor='val_loss', mode='min')
+mcp_save = ModelCheckpoint('weight_isic18_deeplab_v3pa.h5', save_best_only=True, monitor='val_loss', mode='min')
 reduce_lr_loss = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=7, verbose=1, epsilon=1e-4, mode='min')
 history = model.fit(tr_data, tr_mask,
               batch_size=batch_size,
