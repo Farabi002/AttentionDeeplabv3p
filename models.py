@@ -396,7 +396,7 @@ def Deeplabv3pa(weights='pascal_voc', input_tensor=None, input_shape=(512, 512, 
     else:
         inputs = img_input
 
-    model = Model(inputs, x1, name='deeplabv3+')
+    model = Model(inputs, x1, name='deeplabv3_plus')
 
     # load weights
 
