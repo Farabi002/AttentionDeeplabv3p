@@ -46,49 +46,33 @@ from keras.layers import Add
 
 TF_WEIGHTS_PATH = "https://github.com/bonlime/keras-deeplab-v3-plus/releases/download/1.1/deeplabv3_xception_tf_dim_ordering_tf_kernels.h5"
 class BilinearUpsampling(Layer):
-    """Just a simple bilinear upsampling layer. Works only with TF.
-       Args:
-           upsampling: tuple of 2 numbers > 0. The upsampling ratio for h and w
-           output_size: used instead of upsampling arg if passed!
-    """
-
-    def __init__(self, upsampling=(2, 2), output_size=None, l_name = None, data_format=None, **kwargs):
-
+    def __init__(self, upsampling=(2, 2), output_size=None, l_name=None, data_format=None, **kwargs):
         super(BilinearUpsampling, self).__init__(**kwargs)
-
         self.data_format = conv_utils.normalize_data_format(data_format)
         self.name = l_name
         self.input_spec = InputSpec(ndim=4)
         if output_size:
-            self.upsample_size = conv_utils.normalize_tuple(
-                output_size, 2, 'size')
+            self.upsample_size = conv_utils.normalize_tuple(output_size, 2, 'size')
             self.upsampling = None
         else:
             self.upsampling = conv_utils.normalize_tuple(upsampling, 2, 'size')
 
-    def compute_output_shape(self, input_shape):
-        if self.upsampling:
-            height = self.upsampling[0] * \
-                input_shape[1] if input_shape[1] is not None else None
-            width = self.upsampling[1] * \
-                input_shape[2] if input_shape[2] is not None else None
-        else:
-            height = self.upsample_size[0]
-            width = self.upsample_size[1]
-        return (input_shape[0],
-                height,
-                width,
-                input_shape[3])
-
     def call(self, inputs):
         if self.upsampling:
-            return K.tf.image.resize_bilinear(inputs, (inputs.shape[1] * self.upsampling[0],
-                                                       inputs.shape[2] * self.upsampling[1]),
-                                              align_corners=True, name = self.name )
+            return tf.image.resize(inputs, (inputs.shape[1] * self.upsampling[0],
+                                            inputs.shape[2] * self.upsampling[1]),
+                                   method=tf.image.ResizeMethod.BILINEAR)
         else:
-            return K.tf.image.resize_bilinear(inputs, (self.upsample_size[0],
-                                                       self.upsample_size[1]),
-                                              align_corners=True, name= self.name )
+            return tf.image.resize(inputs, self.upsample_size, method=tf.image.ResizeMethod.BILINEAR)
+
+    def compute_output_shape(self, input_shape):
+        if self.upsampling:
+            height = input_shape[1] * self.upsampling[0]
+            width = input_shape[2] * self.upsampling[1]
+        else:
+            height, width = self.upsample_size
+        return (input_shape[0], height, width, input_shape[3])
+
 
     def get_config(self):
         config = {'size': self.upsampling,
