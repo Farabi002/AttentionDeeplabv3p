@@ -37,7 +37,7 @@ from tensorflow.keras.utils import get_source_inputs
 from keras import backend as K
 from keras.applications import imagenet_utils
 from tensorflow.python.keras.utils import conv_utils
-
+from tensorflow.keras.optimizers import Adam
 import keras
 from tensorflow.keras.layers import Lambda
 from tensorflow.keras.utils import get_file
@@ -406,7 +406,10 @@ def Deeplabv3pa(weights='pascal_voc', input_tensor=None, input_shape=(512, 512, 
                                 cache_subdir='models')
         model.load_weights(weights_path, by_name=True)
         
-    model.compile(optimizer = Adam(lr = 1e-4), loss = 'binary_crossentropy', metrics = ['accuracy'])
+    
+
+    model.compile(optimizer=Adam(learning_rate=1e-4), loss='binary_crossentropy', metrics=['accuracy'])
+
 
     return model
 
