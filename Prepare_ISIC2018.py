@@ -19,8 +19,7 @@ Dataset_add = '/kaggle/working/AttentionDeeplabv3p/ISIC2018/'
 Tr_add = 'ISIC2018_Task1-2_Training_Input'
 
 Tr_list = glob.glob(Dataset_add+ Tr_add+'/*.jpg')
-g=len(Dataset_add)
-print(g)
+
 # It contains 2594 training samples
 Data_train_2018    = np.zeros([2594, height, width, channels])
 Label_train_2018   = np.zeros([2594, height, width])
@@ -36,7 +35,6 @@ for idx in range(len(Tr_list)):
     a = b[0:len(Dataset_add)]
     b = b[len(b)-16: len(b)-4] 
     add = (a+ 'ISIC2018_Task1_Training_GroundTruth/' + b +'_segmentation.png') 
-    print(add)
     img2 = Image.open(add)
     img2 = img2.resize((width, height), Image.BILINEAR)
     Label_train_2018[idx, :,:] = img2    
