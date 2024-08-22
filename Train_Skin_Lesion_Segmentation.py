@@ -24,7 +24,7 @@ def dataset_normalized(imgs):
        
     
 ####################################  Load Data #####################################
-base_add = '../'
+base_add = '/kaggle/working/'
 tr_data    = np.load(base_add+'data_train.npy')
 val_data   = np.load(base_add+'data_val.npy')
 
