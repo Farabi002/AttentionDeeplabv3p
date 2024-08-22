@@ -6,7 +6,7 @@ Created on Sat Jun  8 18:15:43 2019
 import h5py
 import numpy as np
 import scipy.io as sio
-import scipy.misc as sc
+from PIL import Image
 import glob
 
 # Parameters
@@ -27,18 +27,18 @@ Label_train_2018   = np.zeros([2594, height, width])
 
 print('Reading ISIC 2018')
 for idx in range(len(Tr_list)):
-    #print(idx+1)
-    img = sc.imread(Tr_list[idx])
-    img = np.double(sc.imresize(img, [height, width, channels], interp='bilinear', mode = 'RGB'))
-    Data_train_2018[idx, :,:,:] = img
+    print(idx+1)
+    img = Image.open(Tr_list[idx]).convert('RGB')
+    img = img.resize((width, height), Image.BILINEAR)
+    Data_train_2018[idx] = np.asarray(img) / 255.0  # Normalize image
 
     b = Tr_list[idx]    
     a = b[0:len(Dataset_add)]
     b = b[len(b)-16: len(b)-4] 
     add = (a+ 'ISIC2018_Task1_Training_GroundTruth/' + b +'_segmentation.png') 
     print(add)
-    img2 = sc.imread(add)
-    img2 = np.double(sc.imresize(img2, [height, width], interp='bilinear'))
+    img2 = Image.open(add)
+    img2 = img2.resize((width, height), Image.BILINEAR)
     Label_train_2018[idx, :,:] = img2    
          
 print('Reading ISIC 2018 finished')
